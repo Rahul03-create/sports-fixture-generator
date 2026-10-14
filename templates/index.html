@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Fixture Generator</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main class="container">
+    <header class="header">
+        <div class="trophy">🏆</div>
+        <h1>Sports Fixture Generator</h1>
+        <p>Create fixtures and record match winners.</p>
+    </header>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <form method="POST" action="/">
+        <label for="tournament_name">Tournament Name</label>
+        <input id="tournament_name" name="tournament_name"
+               maxlength="100" required
+               placeholder="College Sports Fest">
+
+        <label for="sport">Select Sport</label>
+        <select id="sport" name="sport">
+            {% for item in ["Football", "Cricket", "Volleyball",
+            "Basketball", "Table Tennis", "Badminton", "Other"] %}
+            <option value="{{ item }}">{{ item }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="tournament_type">Tournament Format</label>
+        <select id="tournament_type" name="tournament_type">
+            <option value="knockout">Knockout</option>
+            <option value="round_robin">Round Robin</option>
+        </select>
+
+        <label for="teams">Team Names (one per line)</label>
+        <textarea id="teams" name="teams" rows="7"
+                  placeholder="Team A&#10;Team B&#10;Team C&#10;Team D"
+                  required></textarea>
+
+        <button type="submit">Generate Fixtures</button>
+    </form>
+
+    {% if tournament %}
+    <section class="results">
+        <h2>{{ tournament.name }}</h2>
+        <p>Sport: {{ tournament.sport }}</p>
+        <p>Format:
+            {% if tournament.format == "knockout" %}
+                Knockout
+            {% else %}
+                Round Robin
+            {% endif %}
+        </p>
+
+        <form method="POST" action="/reset">
+            <button type="submit" class="secondary-button">
+                Start New Tournament
+            </button>
+        </form>
+
+        {% if tournament.format == "knockout" %}
+
+            {% for round_matches in rounds %}
+            <h2>
+                {% if loop.last and tournament.teams|length > 2 %}
+                    {% if loop.index == rounds|length %}
+                        {% if round_matches|length == 1 %}
+                            Final
+                        {% elif round_matches|length == 2 %}
+                            Semi-finals
+                        {% else %}
+                            Round {{ loop.index }}
+                        {% endif %}
+                    {% endif %}
+                {% else %}
+                    {% if round_matches|length == 1 %}
+                        Final
+                    {% elif round_matches|length == 2 %}
+                        Semi-finals
+                    {% elif round_matches|length == 4 %}
+                        Quarter-finals
+                    {% else %}
+                        Round {{ loop.index }}
+                    {% endif %}
+                {% endif %}
+            </h2>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Match</th>
+                            <th>Team 1</th>
+                            <th>Team 2</th>
+                            <th>Winner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for fixture in round_matches %}
+                        <tr>
+                            <td>{{ fixture.match }}</td>
+                            <td>{{ fixture.team1 }}</td>
+                            <td>{{ fixture.team2 }}</td>
+                            <td>
+                                {% if fixture.team1.startswith("Winner of Match")
+                                   or fixture.team2.startswith("Winner of Match") %}
+                                    <span>Waiting for previous results</span>
+                                {% else %}
+                                    <form method="POST" action="/winner"
+                                          class="winner-form">
+                                        <input type="hidden" name="match"
+                                               value="{{ fixture.match }}">
+                                        <select name="winner" required>
+                                            <option value="">Select winner</option>
+                                            <option value="{{ fixture.team1 }}"
+                                                {% if fixture.winner == fixture.team1 %}
+                                                    selected
+                                                {% endif %}>
+                                                {{ fixture.team1 }}
+                                            </option>
+                                            <option value="{{ fixture.team2 }}"
+                                                {% if fixture.winner == fixture.team2 %}
+                                                    selected
+                                                {% endif %}>
+                                                {{ fixture.team2 }}
+                                            </option>
+                                        </select>
+                                        <button type="submit">
+                                            Save
+                                        </button>
+                                    </form>
+                                {% endif %}
+                                {% if fixture.winner %}
+                                    <p class="winner-label">
+                                        🏆 {{ fixture.winner }}
+                                    </p>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+
+            {% if champion %}
+                <div class="champion">
+                    🏆 Tournament Champion
+                    <h2>{{ champion }}</h2>
+                    <p>Congratulations!</p>
+                </div>
+            {% endif %}
+
+        {% else %}
+            <h2>Round Robin Fixtures</h2>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Match</th>
+                            <th>Team 1</th>
+                            <th>Team 2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for fixture in fixtures %}
+                        <tr>
+                            <td>{{ fixture.match }}</td>
+                            <td>{{ fixture.team1 }}</td>
+                            <td>{{ fixture.team2 }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </section>
+    {% endif %}
+</main>
+
+<footer>Sports Fixture Generator · Python Flask</footer>
+</body>
+</html>

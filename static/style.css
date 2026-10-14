@@ -1,0 +1,329 @@
+
+/* ===== GLOBAL STYLES ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+    padding: 35px 16px;
+    line-height: 1.6;
+}
+
+/* ===== MAIN CONTAINER ===== */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+}
+
+/* ===== HEADER ===== */
+.header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.trophy {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+h1 {
+    color: #174ea6;
+    font-size: 32px;
+    line-height: 1.3;
+    margin-bottom: 10px;
+}
+
+.header p {
+    color: #64748b;
+    font-size: 16px;
+}
+
+/* ===== FORM ELEMENTS ===== */
+label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+input,
+select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    background: #ffffff;
+    color: #1e293b;
+    font-family: inherit;
+    font-size: 15px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 130px;
+    line-height: 1.7;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #94a3b8;
+}
+
+/* ===== BUTTONS ===== */
+button {
+    display: inline-block;
+    padding: 13px 18px;
+    border: none;
+    border-radius: 9px;
+    background: #174ea6;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+button:hover {
+    background: #123b7a;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Main generate button */
+#fixtureForm > button {
+    width: 100%;
+    margin-top: 24px;
+}
+
+/* ===== ERROR MESSAGE ===== */
+.error {
+    margin: 20px 0;
+    padding: 14px 16px;
+    border: 1px solid #fecaca;
+    border-radius: 9px;
+    background: #fef2f2;
+    color: #b91c1c;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* ===== RESULTS SECTION ===== */
+.results {
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.results > h2 {
+    margin-top: 24px;
+}
+
+h2 {
+    color: #174ea6;
+    font-size: 23px;
+    margin-bottom: 12px;
+    overflow-wrap: anywhere;
+}
+
+.results > p {
+    margin-bottom: 8px;
+    color: #475569;
+}
+
+/* ===== TABLES ===== */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin: 16px 0 24px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    background: #ffffff;
+}
+
+thead {
+    background: #174ea6;
+    color: #ffffff;
+}
+
+th {
+    padding: 14px 12px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+td {
+    padding: 13px 12px;
+    border-top: 1px solid #e2e8f0;
+    color: #334155;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+tbody tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+tbody tr:hover {
+    background: #eff6ff;
+}
+
+/* ===== WINNER SELECTION ===== */
+.winner-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 130px;
+}
+
+.winner-form select {
+    width: 100%;
+    padding: 9px;
+    font-size: 13px;
+}
+
+.winner-form button {
+    width: 100%;
+    padding: 9px 12px;
+    background: #0f766e;
+    font-size: 13px;
+}
+
+.winner-form button:hover {
+    background: #115e59;
+}
+
+.winner-label {
+    margin-top: 8px;
+    color: #15803d;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/* ===== RESET TOURNAMENT BUTTON ===== */
+.secondary-button {
+    width: 100%;
+    margin-top: 10px;
+    background: #475569;
+    font-size: 14px;
+}
+
+.secondary-button:hover {
+    background: #334155;
+}
+
+/* ===== CHAMPION DISPLAY ===== */
+.champion {
+    margin-top: 30px;
+    padding: 28px 20px;
+    border: 1px solid #bbf7d0;
+    border-radius: 14px;
+    background: #dcfce7;
+    color: #166534;
+    text-align: center;
+}
+
+.champion h2 {
+    margin: 12px 0;
+    color: #166534;
+    font-size: 30px;
+}
+
+.champion p {
+    color: #15803d;
+    font-weight: 600;
+}
+
+/* ===== FOOTER ===== */
+footer {
+    margin-top: 26px;
+    text-align: center;
+    color: #64748b;
+    font-size: 12px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 700px) {
+    body {
+        padding: 16px 10px;
+    }
+
+    .container {
+        padding: 20px 14px;
+        border-radius: 12px;
+    }
+
+    h1 {
+        font-size: 25px;
+    }
+
+    .trophy {
+        font-size: 40px;
+    }
+
+    .header p {
+        font-size: 14px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    input,
+    select,
+    textarea {
+        font-size: 14px;
+    }
+
+    th,
+    td {
+        padding: 10px 8px;
+        font-size: 12px;
+    }
+
+    .champion {
+        padding: 22px 12px;
+    }
+
+    .champion h2 {
+        font-size: 24px;
+    }
+}
+
+/* ===== ACCESSIBILITY ===== */
+button:focus-visible {
+    outline: 3px solid #93c5fd;
+    outline-offset: 3px;
+}
